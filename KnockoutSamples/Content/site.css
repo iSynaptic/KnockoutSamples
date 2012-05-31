@@ -1,0 +1,6 @@
+@import "themes/base/jquery.ui.all.css";
+@import "bootstrap.css";
+
+body {
+    padding-top: 70px;
+}

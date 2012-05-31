@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Computed Value Binding";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <p>The following sentence is built using the Knockout text binding:</p>
+    <p><span data-bind="text: sentence"></span></p>
+
+    <form class="well">
+        <label>Greeting:</label>
+        <input data-bind="value: greeting" />
+        
+        <label>Subject:</label>
+        <input data-bind="value: subject" />
+        
+        <label>Punctuation:</label>
+        <input data-bind="value: punctuation" />
+    </form>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+
+            function ViewModel() {
+                this.greeting = ko.observable("Hello");
+                this.subject = ko.observable("World");
+                this.punctuation = ko.observable("!");
+
+                this.sentence = ko.computed(function () {
+                    return this.greeting() + ", " + this.subject() + this.punctuation();
+                }, this);
+            }
+
+            var viewModel = new ViewModel();
+            ko.applyBindings(viewModel);
+        });
+    </script>
+}

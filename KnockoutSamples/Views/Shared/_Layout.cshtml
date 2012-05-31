@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/site.css" rel="stylesheet" type="text/css" />
+</head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+              <div class="container-fluid">
+                  <a class="brand" href="~/">Knockout Samples</a>
+              </div>
+          </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span2">
+                    <ul class="nav nav-list">
+                      <li class="nav-header">General</li>
+                        <li><a href="~/Home/SimpleTextBinding">Simple Text Binding</a></li>
+                        <li><a href="~/Home/PrimitiveValueTextBinding">Primitive Value Text Binding</a></li>
+                        <li><a href="~/Home/ObservableValueTextBinding">Observable Value Text Binding</a></li>
+                        <li><a href="~/Home/ComputedValueBinding">Computed Value Binding</a></li>
+                        <li><a href="~/Home/VisibleBinding">Visible Binding</a></li>
+                        <li><a href="~/Home/CssBinding">Css Binding</a></li>
+                    </ul>
+                </div>
+                <div class="span10">
+                    <h2>@ViewBag.Title</h2>
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <script src="~/Scripts/jquery-1.7.2.min.js"></script>
+        <script src="~/Scripts/jquery-ui-1.8.11.min.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+        <script src="~/Scripts/knockout-2.0.0.js"></script>
+        <script src="~/Scripts/global.js"></script>
+        @RenderSection("Scripts", false)
+    </body>
+</html>

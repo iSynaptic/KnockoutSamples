@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Css Binding";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <p>The following word <span class="label" data-bind="css: {'label-important': isImportant }">should</span> be red if the checkbox is checked</p>
+    
+    <form class="well">
+        <lable>Important:</lable>
+        <input type="checkbox" data-bind="checked: isImportant" />
+    </form>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+
+            function ViewModel() {
+                this.isImportant = ko.observable(false);
+            }
+
+            var viewModel = new ViewModel();
+            ko.applyBindings(viewModel);
+        });
+    </script>
+}

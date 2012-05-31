@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Simple Text Binding";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <p>The following sentence is built using the Knockout text binding:</p>
+    <p><span data-bind="text: greeting"></span>, <span data-bind="text: subject"></span><span data-bind="text: punctuation"></span></p>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        $(function() {
+
+            function ViewModel() {
+                this.greeting = "Hello";
+                this.subject = "World";
+                this.punctuation = "!";
+            }
+
+            var viewModel = new ViewModel();
+            ko.applyBindings(viewModel);
+        });
+    </script>
+}
