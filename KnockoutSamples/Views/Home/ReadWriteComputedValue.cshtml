@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Read Write Computed Value";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+	<form class="well">
+		<label>Total Seats</label>
+		<input data-bind="value: totalSeats, spinbox: { }" />
+		
+		<label>Server Seats</label>
+		<input data-bind="value: serverSeats, spinbox: { }" />
+		
+		<label>Workstation Seats</label>
+		<input data-bind="value: workstationSeats, spinbox: { }" />
+	</form>
+</div>
+
+@section Scripts
+{
+	<script type="text/javascript">
+		ko.bindingHandlers.spinbox = {
+			init: function (element, valueAccessor) {
+				var options = ko.utils.unwrapObservable(valueAccessor());
+
+				$(element).spinbox("destroy");
+
+				var targetOptions = {
+					min: $(element).data("min-value") || 0,
+					max: $(element).data("max-value") || 100,
+					step: $(element).data("step-value") || 1
+				};
+
+				$.extend(targetOptions, targetOptions, options);
+
+				$(element).spinbox(targetOptions);
+			}
+		};
+
+		$(function () {
+
+			function ViewModel() {
+				this.totalSeats = ko.observable(10);
+
+				var _serverSeats = ko.observable(5);
+				this.serverSeats = ko.computed({
+					read: function () {
+						return Number(_serverSeats());
+					},
+					write: function (value) {
+						var newValue = Number(value);
+						var totalSeats = Number(this.totalSeats());
+
+						if (newValue > totalSeats) {
+							_serverSeats(totalSeats);
+						} else {
+							_serverSeats(newValue);
+						}
+					},
+					owner: this
+				});
+
+				this.workstationSeats = ko.computed({
+					read: function () {
+						return Number(this.totalSeats()) - Number(this.serverSeats());
+					},
+					write: function (value) {
+						this.totalSeats(Number(this.serverSeats()) + Number(value));
+					},
+					owner: this
+				});
+			}
+
+			var viewModel = new ViewModel();
+			ko.applyBindings(viewModel);
+		});
+
+	</script>
+}

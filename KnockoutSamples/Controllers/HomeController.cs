@@ -68,5 +68,15 @@ namespace KnockoutSamples.Controllers
 		{
 			return View();
 		}
+
+		public ActionResult ReadWriteComputedValue()
+		{
+			return View();
+		}
+
+		public ActionResult UnobtrusiveKnockoutPlugin()
+		{
+			return View();
+		}
     }
 }

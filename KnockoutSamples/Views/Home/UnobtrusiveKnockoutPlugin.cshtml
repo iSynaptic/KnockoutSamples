@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Unobtrusive Knockout Plugin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+	<span id="greeting"></span>, <span id="subject"></span><span id="punctuation"></span>
+	
+    <form class="well">
+        <label>Greeting:</label>
+        <input id="greetingTextBox" />
+        
+        <label>Subject:</label>
+        <input id="subjectTextBox" />
+        
+        <label>Punctuation:</label>
+	<input id="punctuationTextBox" />
+	</form>
+</div>
+
+@section Scripts
+{
+	<script src="~/Scripts/knockout.unobtrusive.min.js"></script>
+	<script type="text/javascript">
+
+		$(function () {
+
+			function ViewModel() {
+				this.greeting = ko.observable("Hello");
+				this.subject = ko.observable("World");
+				this.punctuation = ko.observable("!");
+			}
+
+			var bindings = {
+				text: [
+					{ greeting: 'greeting' },
+					{ subject: 'subject' },
+					{ punctuation: 'punctuation' },
+				],
+
+				value: [
+					{ greetingTextBox: 'greeting' },
+					{ subjectTextBox: 'subject' },
+					{ punctuationTextBox: 'punctuation' },
+				]
+			};
+
+			var viewModel = new ViewModel();
+
+			ko.unobtrusive.createBindings(bindings);
+			ko.applyBindings(viewModel);
+		});
+
+	</script>
+}
