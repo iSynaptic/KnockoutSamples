@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "For Each Binding";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+	<ul data-bind="foreach: items">
+		<li data-bind="text: $data"></li>
+	</ul>
+
+	<form class="well">
+		<input data-bind="value: newItem"/>
+		<button data-bind="click: addItem">Add</button>
+	</form>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+    	$(function () {
+
+    		function ViewModel() {
+    			this.items = ko.observableArray(['One', 'Two', 'Three']);
+
+    			this.newItem = ko.observable('');
+
+    			this.addItem = function () {
+    				var newItem = this.newItem();
+
+    				if (newItem && newItem.length > 0) {
+    					var underlying = this.items();
+    					underlying.push(newItem);
+
+    					this.items.valueHasMutated();
+    				}
+
+    				this.newItem('');
+    			};
+    		}
+
+    		var viewModel = new ViewModel();
+    		ko.applyBindings(viewModel);
+    	});
+    </script>
+}

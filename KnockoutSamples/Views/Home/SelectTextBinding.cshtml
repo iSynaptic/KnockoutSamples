@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Select Text Binding";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+	<span data-bind="text:firstName"></span> <span data-bind="text:lastName"></span>
+	
+	<button data-bind="click: onEdit, visible: !inEditMode()">Edit</button>
+	
+	<form class="well" data-bind="visible: inEditMode">
+		<label>First Name</label>
+		<input data-bind="value: newFirstName, selectText: inEditMode()" />
+		
+		<label>Last Name</label>
+		<input data-bind="value: newLastName" />
+
+		<button data-bind="click: onSave">Save</button>
+		<button data-bind="click: onCancel">Cancel</button>
+	</form>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+    	ko.bindingHandlers.selectText = {
+    		update: function (element, valueAccessor) {
+    			if (ko.utils.unwrapObservable(valueAccessor()) === true) {
+    				element.focus();
+    				element.select();
+    			}
+    		}
+    	};
+    	
+    	$(function () {
+
+    		function ViewModel() {
+    			this.firstName = ko.observable('John');
+    			this.lastName = ko.observable('Smith');
+
+    			this.inEditMode = ko.observable(false);
+
+    			this.newFirstName = ko.observable();
+    			this.newLastName = ko.observable();
+
+    			this.onEdit = function () {
+    				this.newFirstName(this.firstName());
+    				this.newLastName(this.lastName());
+
+    				this.inEditMode(true);
+    			};
+
+    			this.onSave = function () {
+    				if (this.inEditMode()) {
+    					this.firstName(this.newFirstName());
+    					this.lastName(this.newLastName());
+
+    					this.inEditMode(false);
+    				}
+    			};
+
+    			this.onCancel = function () {
+    				this.inEditMode(false);
+    			};
+    		}
+
+    		var viewModel = new ViewModel();
+    		ko.applyBindings(viewModel);
+    	});
+    </script>
+}

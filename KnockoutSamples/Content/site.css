@@ -1,4 +1,5 @@
 @import "themes/base/jquery.ui.all.css";
+@import "jquery.spinbox.css";
 @import "bootstrap.css";
 
 body {

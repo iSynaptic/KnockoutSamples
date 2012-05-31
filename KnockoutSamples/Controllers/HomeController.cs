@@ -38,5 +38,35 @@ namespace KnockoutSamples.Controllers
         {
             return View();
         }
+
+		public ActionResult ForEachBinding()
+		{
+			return View();
+		}
+
+		public ActionResult WithBinding()
+		{
+			return View();
+		}
+
+		public ActionResult HasFocusBinding()
+		{
+			return View();
+		}
+
+		public ActionResult SelectTextBinding()
+		{
+			return View();
+		}
+
+		public ActionResult DatePickerBinding()
+		{
+			return View();
+		}
+
+		public ActionResult SpinBoxBinding()
+		{
+			return View();
+		}
     }
 }

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Spin Box Binding";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+	<span data-bind="text: theNumber"></span>
+	
+	
+	<form class="well">
+		<label>Number</label>
+		<input data-bind="value: theNumber, spinbox: { }" />
+	</form>
+</div>
+
+@section Scripts
+{
+	<script type="text/javascript">
+
+		ko.bindingHandlers.spinbox = {
+			init: function (element, valueAccessor) {
+				var options = ko.utils.unwrapObservable(valueAccessor());
+
+				$(element).spinbox("destroy");
+
+				var targetOptions = {
+					min: $(element).data("min-value") || 0,
+					max: $(element).data("max-value") || 100,
+					step: $(element).data("step-value") || 1
+				};
+
+				$.extend(targetOptions, targetOptions, options);
+
+				$(element).spinbox(targetOptions);
+			}
+		};
+
+		$(function () {
+
+			function ViewModel() {
+				this.theNumber = ko.observable(42);
+			}
+
+			var viewModel = new ViewModel();
+			ko.applyBindings(viewModel);
+		});
+
+	</script>
+}

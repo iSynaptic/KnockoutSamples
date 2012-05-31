@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Date Picker Binding";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+	<span data-bind="text: theDate"></span>
+	
+	
+	<form class="well">
+		<label>Date</label>
+		<input data-bind="datepicker: theDate, datepickerOptions: { changeMonth: true, changeYear: true }" />
+	</form>
+</div>
+
+@section Scripts
+{
+	<script type="text/javascript">
+
+		ko.bindingHandlers.datepicker = {
+			init: function (element, valueAccessor, allBindingsAccessor) {
+				//initialize datepicker with some optional options
+				var options = allBindingsAccessor().datepickerOptions || {};
+				$(element).datepicker(options);
+
+				//handle the field changing
+				ko.utils.registerEventHandler(element, "change", function () {
+					var observable = valueAccessor(),
+			    newDate = $(element).datepicker("getDate");
+					observable(newDate);
+				});
+
+				//handle disposal (if KO removes by the template binding)
+				ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+					$(element).datepicker("destroy");
+				});
+
+			},
+			update: function (element, valueAccessor) {
+				var value = ko.utils.unwrapObservable(valueAccessor()),
+            current = $(element).datepicker("getDate");
+
+				if (value - current !== 0) {
+					$(element).datepicker("setDate", value);
+				}
+			}
+		};
+
+		ko.bindingHandlers.dateTimeDisplay = {
+			update: function (element, valueAccessor) {
+				var value = ko.utils.unwrapObservable(valueAccessor());
+
+				$(element).text(moment(value).format('L LT'));
+			}
+		};
+		
+		$(function () {
+
+			function ViewModel() {
+				this.theDate = ko.observable(new Date());
+			}
+
+			var viewModel = new ViewModel();
+			ko.applyBindings(viewModel);
+		});    	
+
+	</script>
+}
