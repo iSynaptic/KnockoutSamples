@@ -39,32 +39,16 @@
 		$(function () {
 
 			function ViewModel() {
-				this.totalSeats = ko.observable(10);
-
-				var _serverSeats = ko.observable(5);
-				this.serverSeats = ko.computed({
+				this.serverSeats = ko.observable(5);
+				this.workstationSeats = ko.observable(5);
+				
+				this.totalSeats = ko.computed({
 					read: function () {
-						return Number(_serverSeats());
+						return Number(this.serverSeats()) + Number(this.workstationSeats());
 					},
 					write: function (value) {
 						var newValue = Number(value);
-						var totalSeats = Number(this.totalSeats());
-
-						if (newValue > totalSeats) {
-							_serverSeats(totalSeats);
-						} else {
-							_serverSeats(newValue);
-						}
-					},
-					owner: this
-				});
-
-				this.workstationSeats = ko.computed({
-					read: function () {
-						return Number(this.totalSeats()) - Number(this.serverSeats());
-					},
-					write: function (value) {
-						this.totalSeats(Number(this.serverSeats()) + Number(value));
+						this.workstationSeats(newValue - Number(this.serverSeats()));
 					},
 					owner: this
 				});
