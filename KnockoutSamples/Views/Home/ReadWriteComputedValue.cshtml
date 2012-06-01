@@ -41,14 +41,21 @@
 			function ViewModel() {
 				this.serverSeats = ko.observable(5);
 				this.workstationSeats = ko.observable(5);
-				
+
 				this.totalSeats = ko.computed({
 					read: function () {
 						return Number(this.serverSeats()) + Number(this.workstationSeats());
 					},
 					write: function (value) {
 						var newValue = Number(value);
-						this.workstationSeats(newValue - Number(this.serverSeats()));
+						var workstationValue = newValue - Number(this.serverSeats());
+
+						if (workstationValue >= 0) {
+							this.workstationSeats(workstationValue);
+						} else {
+							this.serverSeats(newValue);
+						}
+
 					},
 					owner: this
 				});
